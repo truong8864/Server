@@ -54,12 +54,11 @@ exports.login = async (req, res, next) => {
       httpOnly: true,
     });
     return res.json({
-      ms: "LOGIN THANH CONG",
+      ms: "LOGIN_THANH_CONG",
       data: {
         username,
         refreshToken,
         accessToken,
-        ipUser: req.connection.remoteAddress,
       },
     });
   } catch (error) {
@@ -83,14 +82,14 @@ exports.logout = async (req, res, next) => {
 
 exports.checkLogged = async (req, res, next) => {
   try {
-    const REFRESH_TOKEN = req.cookies.REFRESH_TOKEN;
-    if (REFRESH_TOKEN) {
-      const decode = await jwt.verify(REFRESH_TOKEN, RefreshTokenSecretKey);
+    const ACCESS_TOKEN = req.cookies.ACCESS_TOKEN;
+    if (ACCESS_TOKEN) {
+      const decode = await jwt.verify(ACCESS_TOKEN, AccessTokenSecretKey);
       if (decode.ipUser === req.connection.remoteAddress) {
-        return res.json({ ms: "DA_DANG_NHAP", data: { isLogged: true } });
+        return res.json({ ms: "DA_DANG_NHAP", data: { IsLogged: true } });
       }
     }
-    res.json({ ms: "CHUA_DANG_NHAP", data: { isLogged: false } });
+    res.json({ ms: "CHUA_DANG_NHAP", data: { IsLogged: false } });
   } catch (error) {
     next(error);
   }
