@@ -1,11 +1,7 @@
 const jwt = require("jsonwebtoken");
 const httpStatus = require("http-status")
 
-const Authorization = require("../Authorization/authorization.controller")
-
-Authorization.createFistRole()
-
-const { AccessTokenSecretKey, RefreshTokenSecretKey, AccessTokenExpirationMinutes } = require("../../../../src/config/vars");
+const { AccessTokenSecretKey, RefreshTokenSecretKey, AccessTokenExpirationMinutes } = require("../../../config/vars");
 
 module.exports.verifyToken = async (req, res, next) => {
   try {
@@ -30,10 +26,7 @@ module.exports.refreshToken = async (req, res, next) => {
       const decoder = await jwt.verify(REFRESH_TOKEN, RefreshTokenSecretKey);
       if (req.connection.remoteAddress === decoder.ipUser) {
 
-        const payload = {
-          username: req.decoder.username,
-          ipUser: req.decoder.ipUser,
-        };
+        const payload = req.decoder
     
         const accessToken = jwt.sign(payload, AccessTokenSecretKey, {
           expiresIn: AccessTokenExpirationMinutes * 60 * 1000,

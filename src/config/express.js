@@ -12,9 +12,9 @@ const { logs } = require("./vars");
 
 const error = require("../api/v1/middlewares/Error.middleware");
 
-const {
-  verifyToken,refreshToken
-} = require("../api/v1/middlewares/authentication.middleware");
+const AuthenticationMiddleware = require("../api/v1/middlewares/Authentication.middleware");
+
+const AuthorizationMiddleware = require("../api/v1/middlewares/Authorization.middleware");
 
 const AuthenticationRoute = require("../api/v1/Authentication/Authentication.route");
 const RoutesV1 = require("../api/v1/routes");
@@ -61,8 +61,9 @@ app.use(cors(corsOptionCredentials));
 app.use("/authentication", AuthenticationRoute);
 
 app.use("/hrm/api/v1",
-  verifyToken,
-  refreshToken,
+AuthenticationMiddleware.verifyToken,
+AuthenticationMiddleware.refreshToken,
+AuthorizationMiddleware.middleware((req)=>[req.decoder.username,req.decoder.role]),
   RoutesV1);
 
 // if error is not an instanceOf APIError, convert it.

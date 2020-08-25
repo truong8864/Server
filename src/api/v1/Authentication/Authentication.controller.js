@@ -26,6 +26,7 @@ exports.login = async (req, res, next) => {
 
     const payload = {
       username: user.username,
+      role:user.role,
       ipUser: req.connection.remoteAddress,
     };
 

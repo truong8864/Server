@@ -52,7 +52,6 @@ exports.converter = (err, req, res, next) => {
       stack: err.stack,
     });
   } else if (!(err instanceof APIError)) {
-    console.log("ERRRRRR",err)
     convertedError = new APIError({
       message: err.message,
       status: err.status,
