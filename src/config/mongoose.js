@@ -3,7 +3,7 @@ const logger = require("./../config/logger");
 const { mongo, env } = require("./vars");
 
 // set mongoose Promise to Bluebird
-mongoose.Promise = Promise;
+//mongoose.Promise = Promise;
 
 // Exit application on error
 mongoose.connection.on("error", (err) => {

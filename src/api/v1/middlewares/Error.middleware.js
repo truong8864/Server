@@ -1,6 +1,7 @@
 const httpStatus = require("http-status");
 const expressValidation = require("express-validation");
 const APIError = require("../utils/APIError");
+const DuplicateError = require("../utils/DuplicateError");
 const { env } = require("../../../config/vars");
 
 /**
@@ -11,8 +12,12 @@ const handler = (err, req, res, next) => {
   const response = {
     code: err.status,
     message: err.message || httpStatus[err.status],
+    fields:err.fields,
+    values:err.values,
     errors: err.errors,
     stack: err.stack,
+    type:err.type,
+    reason:err.reason,
   };
 
   if (env !== "development") {
@@ -30,7 +35,6 @@ exports.handler = handler;
  */
 exports.converter = (err, req, res, next) => {
   let convertedError = err;
-
   if (err instanceof expressValidation.ValidationError) {
     convertedError = new APIError({
       message: "Validation Error",
@@ -38,7 +42,17 @@ exports.converter = (err, req, res, next) => {
       status: err.status,
       stack: err.stack,
     });
+  } else if(11000===err.code){
+    const fieldDuplicate = Object.getOwnPropertyNames(err.keyPattern)[0]
+    convertedError = new DuplicateError({
+      message: err.message,
+      fields:fieldDuplicate,
+      values:err.keyValue[fieldDuplicate],
+      status: err.status,
+      stack: err.stack,
+    });
   } else if (!(err instanceof APIError)) {
+    console.log("ERRRRRR",err)
     convertedError = new APIError({
       message: err.message,
       status: err.status,

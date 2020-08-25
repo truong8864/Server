@@ -11,17 +11,18 @@ const {
 
 const UserOnline = require("../models/UserOnline.model");
 const UserModel = require("../models/user.model");
-const { request } = require("../../../config/express");
+
 
 exports.login = async (req, res, next) => {
   try {
+
     const { username, password } = req.body;
 
     const user = await UserModel.findOne({ username });
-    if (!user) return res.json({ ms: "USE_NOT_FOUND" });
+    if (!user) return res.json({ message: "USE_NOT_FOUND" });
 
     const passwordVerify = await bcrypt.compare(password, user.password);
-    if (!passwordVerify) return res.json({ ms: "MAT KHAU KO CHINH XAC" });
+    if (!passwordVerify) return res.json({ message: "MAT KHAU KO CHINH XAC" });
 
     const payload = {
       username: user.username,
@@ -54,7 +55,7 @@ exports.login = async (req, res, next) => {
       httpOnly: true,
     });
     return res.json({
-      ms: "LOGIN_THANH_CONG",
+      message: "LOGIN_THANH_CONG",
       data: {
         username,
         refreshToken,
@@ -74,7 +75,7 @@ exports.logout = async (req, res, next) => {
     });
     res.clearCookie("REFRESH_TOKEN");
     res.clearCookie("ACCESS_TOKEN");
-    res.json({ ms: "LOGOUT FINISH" });
+    res.json({ message: "LOGOUT FINISH" });
   } catch (error) {
     next(error);
   }
@@ -82,16 +83,16 @@ exports.logout = async (req, res, next) => {
 
 exports.checkLogged = async (req, res, next) => {
   try {
-    const ACCESS_TOKEN = req.cookies.ACCESS_TOKEN;
-    if (ACCESS_TOKEN) {
-      const decode = await jwt.verify(ACCESS_TOKEN, AccessTokenSecretKey);
+    const { ACCESS_TOKEN,REFRESH_TOKEN } = req.cookies;
+    if (ACCESS_TOKEN&&REFRESH_TOKEN) {
+      const decode = await jwt.verify(REFRESH_TOKEN, RefreshTokenSecretKey);
       if (decode.ipUser === req.connection.remoteAddress) {
-        return res.json({ ms: "DA_DANG_NHAP", data: { IsLogged: true } });
+        return res.json({ message: "DA_DANG_NHAP", data: { IsLogged: true } });
       }
     }
-    res.json({ ms: "CHUA_DANG_NHAP", data: { IsLogged: false } });
+    res.json({ message: "CHUA_DANG_NHAP", data: { IsLogged: false } });
   } catch (error) {
-    next(error);
+    res.json({ message: "CHUA_DANG_NHAP", data: { IsLogged: false } });
   }
 };
 

@@ -6,27 +6,29 @@ const Hre_ProfileSchema = new Schema(
     ///thong tin co ban khi vao lam
     CodeEmp: { type: Schema.Types.String, required: true, unique: true }, //ma NV**
     DateHire: { type: Schema.Types.String }, //Ngay vao lam**
-    StatusSyn: {}, //trang thai
+    StatusSyn: {type: Schema.Types.String}, //trang thai
 
     //thong tin ca nhan
-    ProfileName: { type: Schema.Types.String }, ///ten nv**
-    FistName: { type: Schema.Types.String }, //ten
-    LastName: { type: Schema.Types.String }, //ho
-    EnglishName: { type: Schema.Types.String }, //ten tieng anh
-    DateOfBirth: { type: Schema.Types.String }, //ngay sinh
+    ProfileName: { type: Schema.Types.String, required: true,minlength:2 }, ///ten nv**
+    // FistName: { type: Schema.Types.String }, //ten
+    // LastName: { type: Schema.Types.String }, //ho
+    // EnglishName: { type: Schema.Types.String }, //ten tieng anh
+    DateOfBirth: { type: Schema.Types.Date }, //ngay sinh
     PlaceOfBirth: { type: Schema.Types.String }, //noi sinh
     Gender: { type: Schema.Types.String }, //gioi tinh
-    IDNo1: { type: Schema.Types.String }, //So CMND
-    IDNo1DateOfIssue: { type: Schema.Types.String },
-    IDNo1PlaceOfIssue: { type: Schema.Types.String },
-    IDNo2: { type: Schema.Types.String }, //The can cuoc cong dan
-    IDNo2DateOfIssue: { type: Schema.Types.String },
-    IDNo2PlaceOfIssue: { type: Schema.Types.String },
-    IDNo2DateOfExpiry: { type: Schema.Types.String },
-    PassportNo: { type: Schema.Types.String }, //So ho chieu
-    PassportDateOfIssue: { type: Schema.Types.String },
-    PassportPlaceOfIssue: { type: Schema.Types.String },
-    PassportDateOfExpiry: { type: Schema.Types.String },
+    IDNo: { type: Schema.Types.String, required: true , unique: true ,minlength:9,maxlength:12 }, //So CMND
+    IDNoDateOfIssue: { type: Schema.Types.String },
+    IDNoPlaceOfIssue: { type: Schema.Types.String },
+
+
+    // IDNo2: { type: Schema.Types.String }, //The can cuoc cong dan
+    // IDNo2DateOfIssue: { type: Schema.Types.String },
+    // IDNo2PlaceOfIssue: { type: Schema.Types.String },
+    // IDNo2DateOfExpiry: { type: Schema.Types.String },
+    // PassportNo: { type: Schema.Types.String }, //So ho chieu
+    // PassportDateOfIssue: { type: Schema.Types.Date },
+    // PassportPlaceOfIssue: { type: Schema.Types.String },
+    // PassportDateOfExpiry: { type: Schema.Types.Date },
 
     // //thong tin lien he
     // Email1: { type: Schema.Types.String },
@@ -47,4 +49,5 @@ const Hre_ProfileSchema = new Schema(
   },
   { timestamps: true }
 );
+
 module.exports = mongoose.model("Hre_Profile", Hre_ProfileSchema);

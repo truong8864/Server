@@ -13,7 +13,7 @@ const { logs } = require("./vars");
 const error = require("../api/v1/middlewares/Error.middleware");
 
 const {
-  verifyToken,
+  verifyToken,refreshToken
 } = require("../api/v1/middlewares/authentication.middleware");
 
 const AuthenticationRoute = require("../api/v1/Authentication/Authentication.route");
@@ -59,7 +59,11 @@ app.use(cors(corsOptionCredentials));
 // // mount api v1 routes
 
 app.use("/authentication", AuthenticationRoute);
-app.use("/hrm/api/v1", verifyToken, RoutesV1);
+
+app.use("/hrm/api/v1",
+  verifyToken,
+  refreshToken,
+  RoutesV1);
 
 // if error is not an instanceOf APIError, convert it.
 app.use(error.converter);
