@@ -3,7 +3,7 @@ const express = require("express");
 const UserRoute = require("../User/User.route");
 const RoleRoute = require("../Role/Role.route");
 const ProfileRoute = require("../HumanResourceExecutive/Profile/Hre_Profile.route");
-const OrgStructureRoute = require("../Category/OrgStructure/OrgStructure.route");
+const OrgStructureRoute = require("../Category/OrgStructure/Cat_OrgStructure.route");
 
 const RouterV1 = express.Router();
 

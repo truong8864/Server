@@ -37,4 +37,4 @@ cluster.on("exit", (worker) => {
  * Exports express
  * @public
  */
-///module.exports = app;
+module.exports = app;

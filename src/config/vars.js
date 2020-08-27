@@ -5,15 +5,11 @@ require("dotenv").config({
   path: path.join(__dirname, "../../example.env"),
   allowEmptyValues: true,
 });
-// require("dotenv-safe").config({
-//   sample: "../../example.env",
-//   //path: "../../.env",
-//   allowEmptyValues: true,
-// });
 
 module.exports = {
   env: process.env.NODE_ENV,
   port: process.env.PORT,
+  PasswordSecretKey: process.env.PASSWORD_SECRET_KEY,
   AccessTokenSecretKey: process.env.ACCESS_TOKEN_SECRET_KEY,
   RefreshTokenSecretKey: process.env.REFRESH_TOKEN_SECRET_KEY,
   AccessTokenExpirationMinutes: process.env.ACCESS_TOKEN_EXPIRATION_MINUTES,

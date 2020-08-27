@@ -10,13 +10,16 @@ const helmet = require("helmet");
 
 const { logs } = require("./vars");
 
-const error = require("../api/v1/middlewares/Error.middleware");
+const ErrorMiddleware = require("../api/v1/middlewares/Error.middleware");
 
 const AuthenticationMiddleware = require("../api/v1/middlewares/Authentication.middleware");
 
 const AuthorizationMiddleware = require("../api/v1/middlewares/Authorization.middleware");
 
 const AuthenticationRoute = require("../api/v1/Authentication/Authentication.route");
+
+const AuthorizationRoute = require("../api/v1/Authorization/Authorization.route");
+
 const RoutesV1 = require("../api/v1/routes");
 
 /**
@@ -59,6 +62,7 @@ app.use(cors(corsOptionCredentials));
 // // mount api v1 routes
 
 app.use("/authentication", AuthenticationRoute);
+app.use("/authorization", AuthorizationRoute);
 
 app.use(
   "/hrm/api/v1",
@@ -72,12 +76,12 @@ app.use(
 );
 
 // if error is not an instanceOf APIError, convert it.
-app.use(error.converter);
+app.use(ErrorMiddleware.converter);
 
 // catch 404 and forward to error handler
-app.use(error.notFound);
+app.use(ErrorMiddleware.notFound);
 
 // error handler, send stacktrace only during development
-app.use(error.handler);
+app.use(ErrorMiddleware.handler);
 
 module.exports = app;
