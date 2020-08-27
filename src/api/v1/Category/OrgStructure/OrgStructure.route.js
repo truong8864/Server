@@ -11,11 +11,11 @@ OrgStructureRoute.route("/")
   .patch()
   .delete();
 
-OrgStructureRoute.route("/:Code")
-  //.get(OrgStructureController.getByCode)
-  //.post()
-  //.put(OrgStructureController.update)
-  // .patch()
-  // .delete(OrgStructureController.delete);
+OrgStructureRoute.route("/:Code");
+//.get(OrgStructureController.getByCode)
+//.post()
+//.put(OrgStructureController.update)
+// .patch()
+// .delete(OrgStructureController.delete);
 
 module.exports = OrgStructureRoute;

@@ -3,9 +3,10 @@ const Schema = mongoose.Schema;
 
 const RoleSchema = new Schema(
   {
-    role: { type: String,required:true,unique:true},
-    allows:{type: Array,required:true}
+    role: { type: String, required: true, unique: true },
+    allows: { type: Array, required: true },
   },
-  { timestamps: true });
+  { timestamps: true },
+);
 
 module.exports = mongoose.model("Role", RoleSchema);

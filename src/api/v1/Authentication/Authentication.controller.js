@@ -9,13 +9,11 @@ const {
   RefreshTokenExpirationMinutes,
 } = require("../../../config/vars.js");
 
-const UserOnline = require("../models/UserOnline.model");
-const UserModel = require("../models/user.model");
-
+const UserOnlineModel = require("../UserOnline/UserOnline.model");
+const UserModel = require("../User/User.model");
 
 exports.login = async (req, res, next) => {
   try {
-
     const { username, password } = req.body;
 
     const user = await UserModel.findOne({ username });
@@ -26,7 +24,7 @@ exports.login = async (req, res, next) => {
 
     const payload = {
       username: user.username,
-      role:user.role,
+      role: user.role,
       ipUser: req.connection.remoteAddress,
     };
 
@@ -45,7 +43,7 @@ exports.login = async (req, res, next) => {
       refreshToken: refreshToken,
     };
 
-    await UserOnline.create(newUserOnline);
+    await UserOnlineModel.create(newUserOnline);
 
     res.cookie("ACCESS_TOKEN", accessToken, {
       maxAge: AccessTokenExpirationMinutes * 60 * 1000,
@@ -71,7 +69,7 @@ exports.login = async (req, res, next) => {
 exports.logout = async (req, res, next) => {
   try {
     const REFRESH_TOKEN = req.cookies.REFRESH_TOKEN;
-    await UserOnline.findOneAndDelete({
+    await UserOnlineModel.findOneAndDelete({
       refreshToken: REFRESH_TOKEN,
     });
     res.clearCookie("REFRESH_TOKEN");
@@ -84,8 +82,8 @@ exports.logout = async (req, res, next) => {
 
 exports.checkLogged = async (req, res, next) => {
   try {
-    const { ACCESS_TOKEN,REFRESH_TOKEN } = req.cookies;
-    if (ACCESS_TOKEN&&REFRESH_TOKEN) {
+    const { ACCESS_TOKEN, REFRESH_TOKEN } = req.cookies;
+    if (ACCESS_TOKEN && REFRESH_TOKEN) {
       const decode = await jwt.verify(REFRESH_TOKEN, RefreshTokenSecretKey);
       if (decode.ipUser === req.connection.remoteAddress) {
         return res.json({ message: "DA_DANG_NHAP", data: { IsLogged: true } });

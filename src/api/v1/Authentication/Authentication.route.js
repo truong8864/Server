@@ -8,11 +8,11 @@ AuthenticationRoute.route("/login").post(AuthenticationController.login);
 AuthenticationRoute.route("/logout").get(AuthenticationController.logout);
 
 AuthenticationRoute.route("/check-logged").get(
-  AuthenticationController.checkLogged
+  AuthenticationController.checkLogged,
 );
 
 AuthenticationRoute.route("/refresh-token").get(
-  AuthenticationController.refreshToken
+  AuthenticationController.refreshToken,
 );
 
 module.exports = AuthenticationRoute;

@@ -1,6 +1,8 @@
 const express = require("express");
 
-const UserController = require("./User.controller");
+const ClassUserController = require("./User.controller");
+
+const UserController = new ClassUserController();
 
 const UserRoute = express.Router();
 
@@ -11,11 +13,18 @@ UserRoute.route("/")
   .patch()
   .delete();
 
-UserRoute.route("/:username")
-  .get(UserController.getByUserName)
+UserRoute.route("/:ID")
+  .get(UserController.getByID)
   .post()
   .put(UserController.update)
   .patch()
   .delete(UserController.delete);
+
+// UserRoute.route("/:username")
+//   .get(UserController.getByUserName)
+//   .post()
+//   .put(UserController.updateByUserName)
+//   .patch()
+//   .delete(UserController.deleteByUserName);
 
 module.exports = UserRoute;

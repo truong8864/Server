@@ -6,20 +6,25 @@ const Hre_ProfileSchema = new Schema(
     ///thong tin co ban khi vao lam
     CodeEmp: { type: Schema.Types.String, required: true, unique: true }, //ma NV**
     DateHire: { type: Schema.Types.String }, //Ngay vao lam**
-    StatusSyn: {type: Schema.Types.String}, //trang thai
+    StatusSyn: { type: Schema.Types.String }, //trang thai
 
     //thong tin ca nhan
-    ProfileName: { type: Schema.Types.String, required: true,minlength:2 }, ///ten nv**
+    ProfileName: { type: Schema.Types.String, required: true, minlength: 2 }, ///ten nv**
     // FistName: { type: Schema.Types.String }, //ten
     // LastName: { type: Schema.Types.String }, //ho
     // EnglishName: { type: Schema.Types.String }, //ten tieng anh
     DateOfBirth: { type: Schema.Types.Date }, //ngay sinh
     PlaceOfBirth: { type: Schema.Types.String }, //noi sinh
     Gender: { type: Schema.Types.String }, //gioi tinh
-    IDNo: { type: Schema.Types.String, required: true , unique: true ,minlength:9,maxlength:12 }, //So CMND
+    IDNo: {
+      type: Schema.Types.String,
+      required: true,
+      unique: true,
+      minlength: 9,
+      maxlength: 12,
+    }, //So CMND
     IDNoDateOfIssue: { type: Schema.Types.String },
     IDNoPlaceOfIssue: { type: Schema.Types.String },
-
 
     // IDNo2: { type: Schema.Types.String }, //The can cuoc cong dan
     // IDNo2DateOfIssue: { type: Schema.Types.String },
@@ -47,7 +52,7 @@ const Hre_ProfileSchema = new Schema(
     UserCreate: { type: Schema.Types.String }, ///nguoi tao
     UserUpdate: { type: Schema.Types.String }, //nguoi cap nhat
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = mongoose.model("Hre_Profile", Hre_ProfileSchema);

@@ -1,6 +1,8 @@
 const express = require("express");
 
-const ProfileController = require("./Profile.controller");
+const ClassHre_ProfileController = require("./Hre_Profile.controller");
+
+const ProfileController = new ClassHre_ProfileController();
 
 const ProfileRoute = express.Router();
 
@@ -11,7 +13,7 @@ ProfileRoute.route("/")
   .patch()
   .delete();
 
-  ProfileRoute.route("/:ID")
+ProfileRoute.route("/:ID")
   .get(ProfileController.getByID)
   .post()
   .put(ProfileController.update)

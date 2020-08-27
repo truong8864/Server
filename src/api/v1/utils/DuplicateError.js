@@ -1,6 +1,6 @@
 const httpStatus = require("http-status");
 
-const ExtendableError = require("./ExtendableError")
+const ExtendableError = require("./ExtendableError");
 
 /**
  * Class representing an API error.
@@ -29,7 +29,7 @@ class DuplicateError extends ExtendableError {
       values,
       status,
       isPublic,
-      stack
+      stack,
     });
   }
 }

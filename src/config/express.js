@@ -60,11 +60,16 @@ app.use(cors(corsOptionCredentials));
 
 app.use("/authentication", AuthenticationRoute);
 
-app.use("/hrm/api/v1",
-AuthenticationMiddleware.verifyToken,
-AuthenticationMiddleware.refreshToken,
-AuthorizationMiddleware.middleware((req)=>[req.decoder.username,req.decoder.role]),
-  RoutesV1);
+app.use(
+  "/hrm/api/v1",
+  AuthenticationMiddleware.verifyToken,
+  AuthenticationMiddleware.refreshToken,
+  AuthorizationMiddleware.middleware((req) => [
+    req.decoder.username,
+    req.decoder.role,
+  ]),
+  RoutesV1,
+);
 
 // if error is not an instanceOf APIError, convert it.
 app.use(error.converter);

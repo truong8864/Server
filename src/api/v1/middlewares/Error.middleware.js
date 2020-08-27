@@ -12,12 +12,12 @@ const handler = (err, req, res, next) => {
   const response = {
     code: err.status,
     message: err.message || httpStatus[err.status],
-    fields:err.fields,
-    values:err.values,
+    fields: err.fields,
+    values: err.values,
     errors: err.errors,
     stack: err.stack,
-    type:err.type,
-    reason:err.reason,
+    type: err.type,
+    reason: err.reason,
   };
 
   if (env !== "development") {
@@ -42,12 +42,12 @@ exports.converter = (err, req, res, next) => {
       status: err.status,
       stack: err.stack,
     });
-  } else if(11000===err.code){
-    const fieldDuplicate = Object.getOwnPropertyNames(err.keyPattern)[0]
+  } else if (11000 === err.code) {
+    const fieldDuplicate = Object.getOwnPropertyNames(err.keyPattern)[0];
     convertedError = new DuplicateError({
       message: err.message,
-      fields:fieldDuplicate,
-      values:err.keyValue[fieldDuplicate],
+      fields: fieldDuplicate,
+      values: err.keyValue[fieldDuplicate],
       status: err.status,
       stack: err.stack,
     });
