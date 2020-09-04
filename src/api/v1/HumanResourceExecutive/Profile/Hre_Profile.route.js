@@ -13,18 +13,20 @@ ProfileRoute.route("/")
   .patch()
   .delete();
 
-ProfileRoute.route("/:ID")
-  .get(ProfileController.getByID)
-  .post()
-  .put(ProfileController.update)
-  .patch()
-  .delete(ProfileController.delete);
+ProfileRoute.route("/TONGHOP").get(ProfileController.TONGHOP);
 
-// ProfileRoute.route("/:CodeEmp")
-//   .get(ProfileController.getByCodeEmp)
+// ProfileRoute.route("/:ID")
+//   .get(ProfileController.getByID)
 //   .post()
-//   .put(ProfileController.updateByCodeEmp)
+//   .put(ProfileController.update)
 //   .patch()
-//   .delete(ProfileController.deleteByCodeEmp);
+//   .delete(ProfileController.delete);
+
+ProfileRoute.route("/:Code")
+  .get(ProfileController.getByCode)
+  .post()
+  .put(ProfileController.updateByCode)
+  .patch()
+  .delete(ProfileController.deleteByCode);
 
 module.exports = ProfileRoute;

@@ -8,7 +8,7 @@ const methodOverride = require("method-override");
 const cors = require("cors");
 const helmet = require("helmet");
 
-const { logs } = require("./vars");
+const { logs, FrontEndUrl } = require("./vars");
 
 const ErrorMiddleware = require("../api/v1/middlewares/Error.middleware");
 
@@ -21,6 +21,8 @@ const AuthenticationRoute = require("../api/v1/Authentication/Authentication.rou
 const AuthorizationRoute = require("../api/v1/Authorization/Authorization.route");
 
 const RoutesV1 = require("../api/v1/routes");
+
+const Parse = require("../api/v1/middlewares/Paser.middleware");
 
 /**
  * Express instance
@@ -49,7 +51,7 @@ app.use(helmet());
 // enable CORS - Cross Origin Resource Sharing
 
 const corsOptionCredentials = {
-  origin: "http://localhost:3000",
+  origin: FrontEndUrl,
   credentials: true,
 };
 
@@ -64,6 +66,7 @@ app.use(cors(corsOptionCredentials));
 app.use("/authentication", AuthenticationRoute);
 app.use("/authorization", AuthorizationRoute);
 
+app.use(Parse.parseURL);
 app.use(
   "/hrm/api/v1",
   AuthenticationMiddleware.verifyToken,

@@ -2,10 +2,10 @@
 Promise = require("bluebird"); // eslint-disable-line no-global-assign
 var cluster = require("cluster");
 
-const { port, env } = require("./config/vars");
-const logger = require("./config/logger");
-const mongoose = require("./config/mongoose");
-const app = require("./config/express");
+const { port, env } = require("./vars");
+const logger = require("./logger");
+const mongoose = require("./mongoose");
+const app = require("./express");
 
 // open mongoose connection
 mongoose.connect();

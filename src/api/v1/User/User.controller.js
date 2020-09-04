@@ -60,8 +60,6 @@ class UserController extends BaseController {
       res.json({
         method: "GET",
         path: req.originalUrl,
-        message: "GET BY USERNAME",
-        status: "SUCCESS",
         data,
       });
     } catch (error) {
@@ -83,8 +81,6 @@ class UserController extends BaseController {
       res.json({
         method: "PUT",
         path: req.originalUrl,
-        message: "UPDATE BY USERNAME",
-        status: "SUCCESS",
         data: result,
       });
     } catch (error) {
@@ -99,8 +95,6 @@ class UserController extends BaseController {
       res.json({
         method: "DELETE",
         path: req.originalUrl,
-        message: "DELETE BY USERNAME",
-        status: "SUCCESS",
         data: result,
       });
     } catch (error) {

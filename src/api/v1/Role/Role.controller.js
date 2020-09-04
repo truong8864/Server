@@ -20,8 +20,6 @@ class RoleController extends BaseController {
       res.json({
         method: "GET",
         path: req.originalUrl,
-        message: "GET BY ROLE",
-        status: "SUCCESS",
         data,
       });
     } catch (error) {
@@ -39,8 +37,6 @@ class RoleController extends BaseController {
       res.json({
         method: "PUT",
         path: req.originalUrl,
-        message: "UPDATE BY ROLE",
-        status: "SUCCESS",
         data: result,
       });
     } catch (error) {
@@ -55,8 +51,6 @@ class RoleController extends BaseController {
       res.json({
         method: "DELETE",
         path: req.originalUrl,
-        message: "DELETE BY ROLE",
-        status: "SUCCESS",
         data: result,
       });
     } catch (error) {

@@ -9,6 +9,7 @@ require("dotenv").config({
 module.exports = {
   env: process.env.NODE_ENV,
   port: process.env.PORT,
+  FrontEndUrl: process.env.FRONT_END_URL,
   PasswordSecretKey: process.env.PASSWORD_SECRET_KEY,
   AccessTokenSecretKey: process.env.ACCESS_TOKEN_SECRET_KEY,
   RefreshTokenSecretKey: process.env.REFRESH_TOKEN_SECRET_KEY,

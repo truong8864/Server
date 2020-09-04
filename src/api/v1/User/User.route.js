@@ -13,18 +13,18 @@ UserRoute.route("/")
   .patch()
   .delete();
 
-UserRoute.route("/:ID")
-  .get(UserController.getByID)
-  .post()
-  .put(UserController.update)
-  .patch()
-  .delete(UserController.delete);
-
-// UserRoute.route("/:username")
-//   .get(UserController.getByUserName)
+// UserRoute.route("/:ID")
+//   .get(UserController.getByID)
 //   .post()
-//   .put(UserController.updateByUserName)
+//   .put(UserController.update)
 //   .patch()
-//   .delete(UserController.deleteByUserName);
+//   .delete(UserController.delete);
+
+UserRoute.route("/:username")
+  .get(UserController.getByUserName)
+  .post()
+  .put(UserController.updateByUserName)
+  .patch()
+  .delete(UserController.deleteByUserName);
 
 module.exports = UserRoute;
