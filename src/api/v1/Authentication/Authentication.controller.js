@@ -50,9 +50,13 @@ class AuthenticationController {
       res.cookie("ACCESS_TOKEN", accessToken, {
         maxAge: AccessTokenExpirationMinutes * 60 * 1000,
         httpOnly: true,
+        SameSite: "None",
+        Secure: true,
       });
       res.cookie("REFRESH_TOKEN", refreshToken, {
         maxAge: RefreshTokenExpirationMinutes * 60 * 1000,
+        SameSite: "None",
+        Secure: true,
         httpOnly: true,
       });
       return res.json({
