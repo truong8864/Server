@@ -47,18 +47,18 @@ class AuthenticationController {
 
       await UserOnlineModel.create(newUserOnline);
 
-      res.cookie("_ACCESS_TOKEN", accessToken, {
+      res.cookie("_ACCESS_TOKEN-TOKEN", accessToken, {
         maxAge: AccessTokenExpirationMinutes * 60 * 1000,
         httpOnly: true,
-        sameSite: "Strict",
-        domain: ".herokuapp.com",
+        // sameSite: "Strict",
+        // domain: ".herokuapp.com",
         secure: true,
       });
-      res.cookie("_REFRESH_TOKEN", refreshToken, {
+      res.cookie("_REFRESH_TOKEN-TOKEN", refreshToken, {
         maxAge: RefreshTokenExpirationMinutes * 60 * 1000,
-        sameSite: "Strict",
+        //sameSite: "Strict",
         secure: true,
-        domain: ".herokuapp.com",
+        // domain: ".herokuapp.com",
         httpOnly: true,
       });
       return res.json({
