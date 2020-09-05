@@ -51,12 +51,14 @@ class AuthenticationController {
         maxAge: AccessTokenExpirationMinutes * 60 * 1000,
         httpOnly: true,
         SameSite: "None",
+        Domain: "web-client1.herokuapp.com",
         Secure: true,
       });
       res.cookie("REFRESH_TOKEN", refreshToken, {
         maxAge: RefreshTokenExpirationMinutes * 60 * 1000,
         SameSite: "None",
         Secure: true,
+        Domain: "web-client1.herokuapp.com",
         httpOnly: true,
       });
       return res.json({
