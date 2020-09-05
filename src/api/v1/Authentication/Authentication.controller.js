@@ -100,7 +100,11 @@ class AuthenticationController {
       }
       res
         .status(httpStatus.UNAUTHORIZED)
-        .json({ message: "Token created by another user" });
+        .json({
+          message: "Token created by another user",
+          decode,
+          IP: req.connection.remoteAddress,
+        });
     } catch (error) {
       res.json({ message: "CHUA_DANG_NHAP", data: { IsLogged: false } });
     }
