@@ -80,8 +80,8 @@ class AuthenticationController {
       await UserOnlineModel.findOneAndDelete({
         refreshToken: REFRESH_TOKEN,
       });
-      res.clearCookie("REFRESH_TOKEN");
-      res.clearCookie("ACCESS_TOKEN");
+      res.clearCookie("_REFRESH_TOKEN");
+      res.clearCookie("_ACCESS_TOKEN");
       res.json({ message: "LOGOUT FINISH" });
     } catch (error) {
       next(error);
@@ -90,9 +90,9 @@ class AuthenticationController {
 
   checkLogged = async (req, res, next) => {
     try {
-      const { ACCESS_TOKEN, REFRESH_TOKEN } = req.cookies;
-      if (ACCESS_TOKEN && REFRESH_TOKEN) {
-        const decode = await jwt.verify(REFRESH_TOKEN, RefreshTokenSecretKey);
+      const { _ACCESS_TOKEN, _REFRESH_TOKEN } = req.cookies;
+      if (_ACCESS_TOKEN && _REFRESH_TOKEN) {
+        const decode = await jwt.verify(_REFRESH_TOKEN, RefreshTokenSecretKey);
         if (decode.ipUser === req.connection.remoteAddress) {
           return res.json({
             message: "DA_DANG_NHAP",
