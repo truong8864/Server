@@ -52,12 +52,12 @@ class AuthenticationController {
         httpOnly: true,
         sameSite: "Strict",
         domain: "web-client1.herokuapp.com",
-        Secure: true,
+        secure: true,
       });
       res.cookie("_REFRESH_TOKEN", refreshToken, {
         maxAge: RefreshTokenExpirationMinutes * 60 * 1000,
         sameSite: "Strict",
-        Secure: true,
+        secure: true,
         domain: "web-client1.herokuapp.com",
         httpOnly: true,
       });
