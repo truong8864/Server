@@ -1,4 +1,4 @@
-//const httpStatus = require("http-status");
+const httpStatus = require("http-status");
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -98,7 +98,9 @@ class AuthenticationController {
           });
         }
       }
-      res.json({ message: "CHUA_DANG_NHAP", data: { IsLogged: false } });
+      res
+        .status(httpStatus.UNAUTHORIZED)
+        .json({ message: "Token created by another user" });
     } catch (error) {
       res.json({ message: "CHUA_DANG_NHAP", data: { IsLogged: false } });
     }
