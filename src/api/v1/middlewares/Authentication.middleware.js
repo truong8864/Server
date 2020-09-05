@@ -32,7 +32,7 @@ module.exports.refreshToken = async (req, res, next) => {
     );
     if (AccessTokenExpirationAt < new Date(Date.now() + 1000 * 60 * 5)) {
       const { REFRESH_TOKEN } = req.cookies;
-      const decoder = await jwt.verify(REFRESH_TOKEN, RefreshTokenSecretKey);
+      const decoder = jwt.verify(REFRESH_TOKEN, RefreshTokenSecretKey);
       if (req.connection.remoteAddress === decoder.ipUser) {
         const payload = req.decoder;
 
@@ -43,6 +43,8 @@ module.exports.refreshToken = async (req, res, next) => {
         res.cookie("ACCESS_TOKEN", accessToken, {
           maxAge: AccessTokenExpirationMinutes * 60 * 1000,
           httpOnly: true,
+          sameSite: "None",
+          secure: true,
         });
       }
     }
