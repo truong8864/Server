@@ -19,6 +19,7 @@ module.exports.verifyToken = async (req, res, next) => {
       .status(httpStatus.UNAUTHORIZED)
       .json({ message: "Token created by another user" });
   } catch (error) {
+    console.log(error);
     return res
       .status(httpStatus.UNAUTHORIZED)
       .json({ message: "Token not verify" });

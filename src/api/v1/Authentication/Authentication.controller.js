@@ -56,8 +56,8 @@ class AuthenticationController {
       res.cookie("REFRESH_TOKEN", refreshToken, {
         maxAge: RefreshTokenExpirationMinutes * 60 * 1000,
         sameSite: "None",
-        secure: true,
         httpOnly: true,
+        secure: true,
       });
       return res.json({
         message: "LOGIN_THANH_CONG",
