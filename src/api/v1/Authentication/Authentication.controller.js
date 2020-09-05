@@ -47,14 +47,14 @@ class AuthenticationController {
 
       await UserOnlineModel.create(newUserOnline);
 
-      res.cookie("ACCESS_TOKEN", accessToken, {
+      res.cookie("_ACCESS_TOKEN", accessToken, {
         maxAge: AccessTokenExpirationMinutes * 60 * 1000,
         httpOnly: true,
         SameSite: "None",
         Domain: "web-client1.herokuapp.com",
         Secure: true,
       });
-      res.cookie("REFRESH_TOKEN", refreshToken, {
+      res.cookie("_REFRESH_TOKEN", refreshToken, {
         maxAge: RefreshTokenExpirationMinutes * 60 * 1000,
         SameSite: "None",
         Secure: true,
