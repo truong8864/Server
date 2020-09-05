@@ -1,5 +1,5 @@
 const express = require("express");
-const ClassAuthenticationController = require("Authentication.controller");
+const ClassAuthenticationController = require("./Authentication.controller.js");
 
 const AuthenticationController = new ClassAuthenticationController();
 
