@@ -90,21 +90,19 @@ class AuthenticationController {
     try {
       const { ACCESS_TOKEN, REFRESH_TOKEN } = req.cookies;
       if (ACCESS_TOKEN && REFRESH_TOKEN) {
-        const decode = jwt.verify(REFRESH_TOKEN, RefreshTokenSecretKey);
-        if (decode.ipUser === req.connection.remoteAddress) {
+        const decoder = await jwt.verify(REFRESH_TOKEN, RefreshTokenSecretKey);
+        if (decoder.ipUser === req.connection.remoteAddress) {
           return res.json({
             message: "DA_DANG_NHAP",
             data: { IsLogged: true },
           });
         }
       }
-      res
-        .status(httpStatus.UNAUTHORIZED)
-        .json({
-          message: "Token created by another user",
-          decode,
-          IP: req.connection.remoteAddress,
-        });
+      res.status(httpStatus.UNAUTHORIZED).json({
+        message: "Token created by another user",
+        decoder,
+        IP: req.connection.remoteAddress,
+      });
     } catch (error) {
       res.json({ message: "CHUA_DANG_NHAP", data: { IsLogged: false } });
     }

@@ -17,7 +17,7 @@ module.exports.verifyToken = async (req, res, next) => {
     }
     res.status(httpStatus.UNAUTHORIZED).json({
       message: "Token created by another user",
-      decode,
+      decoder,
       IP: req.connection.remoteAddress,
     });
   } catch (error) {
