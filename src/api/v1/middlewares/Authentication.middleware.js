@@ -10,7 +10,7 @@ const {
 module.exports.verifyToken = async (req, res, next) => {
   try {
     const ACCESS_TOKEN = req.cookies.ACCESS_TOKEN;
-    const decoder = await jwt.verify(ACCESS_TOKEN, AccessTokenSecretKey);
+    const decoder = jwt.verify(ACCESS_TOKEN, AccessTokenSecretKey);
     if (req.connection.remoteAddress === decoder.ipUser) {
       req.decoder = decoder;
       return next();
