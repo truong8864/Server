@@ -47,14 +47,14 @@ class AuthenticationController {
 
       await UserOnlineModel.create(newUserOnline);
 
-      res.cookie("_ACCESS_TOKEN-TOKEN", accessToken, {
+      res.cookie("_ACCESS_TOKEN", accessToken, {
         maxAge: AccessTokenExpirationMinutes * 60 * 1000,
         httpOnly: true,
         sameSite: "None",
         // domain: ".herokuapp.com",
         secure: true,
       });
-      res.cookie("_REFRESH_TOKEN-TOKEN", refreshToken, {
+      res.cookie("_REFRESH_TOKEN", refreshToken, {
         maxAge: RefreshTokenExpirationMinutes * 60 * 1000,
         sameSite: "None",
         secure: true,
@@ -76,9 +76,9 @@ class AuthenticationController {
 
   logout = async (req, res, next) => {
     try {
-      const REFRESH_TOKEN = req.cookies.REFRESH_TOKEN;
+      const _REFRESH_TOKEN = req.cookies["_REFRESH_TOKEN"];
       await UserOnlineModel.findOneAndDelete({
-        refreshToken: REFRESH_TOKEN,
+        refreshToken: _REFRESH_TOKEN,
       });
       res.clearCookie("_REFRESH_TOKEN");
       res.clearCookie("_ACCESS_TOKEN");
