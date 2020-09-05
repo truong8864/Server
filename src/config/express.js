@@ -70,7 +70,7 @@ app.use(Parse.parseURL);
 app.use(
   "/hrm/api/v1",
   AuthenticationMiddleware.verifyToken,
-  //AuthenticationMiddleware.refreshToken,
+  AuthenticationMiddleware.refreshToken,
   // AuthorizationMiddleware.middleware((req) => [
   //   req.decoder.username,
   //   req.decoder.role,
