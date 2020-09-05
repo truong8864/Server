@@ -90,7 +90,7 @@ class AuthenticationController {
     try {
       const { ACCESS_TOKEN, REFRESH_TOKEN } = req.cookies;
       if (ACCESS_TOKEN && REFRESH_TOKEN) {
-        const decode = await jwt.verify(REFRESH_TOKEN, RefreshTokenSecretKey);
+        const decode = jwt.verify(REFRESH_TOKEN, RefreshTokenSecretKey);
         if (decode.ipUser === req.connection.remoteAddress) {
           return res.json({
             message: "DA_DANG_NHAP",
