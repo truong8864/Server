@@ -47,14 +47,14 @@ class AuthenticationController {
 
       await UserOnlineModel.create(newUserOnline);
 
-      res.cookie("_ACCESS_TOKEN", accessToken, {
+      res.cookie("ACCESS_TOKEN", accessToken, {
         maxAge: AccessTokenExpirationMinutes * 60 * 1000,
         httpOnly: true,
         sameSite: "None",
         // domain: ".herokuapp.com",
         secure: true,
       });
-      res.cookie("_REFRESH_TOKEN", refreshToken, {
+      res.cookie("REFRESH_TOKEN", refreshToken, {
         maxAge: RefreshTokenExpirationMinutes * 60 * 1000,
         sameSite: "None",
         secure: true,
@@ -76,12 +76,12 @@ class AuthenticationController {
 
   logout = async (req, res, next) => {
     try {
-      const _REFRESH_TOKEN = req.cookies["_REFRESH_TOKEN"];
+      const REFRESH_TOKEN = req.cookies["REFRESH_TOKEN"];
       await UserOnlineModel.findOneAndDelete({
-        refreshToken: _REFRESH_TOKEN,
+        refreshToken: REFRESH_TOKEN,
       });
-      res.clearCookie("_REFRESH_TOKEN");
-      res.clearCookie("_ACCESS_TOKEN");
+      res.clearCookie("REFRESH_TOKEN");
+      res.clearCookie("ACCESS_TOKEN");
       res.json({ message: "LOGOUT FINISH" });
     } catch (error) {
       next(error);
@@ -90,9 +90,9 @@ class AuthenticationController {
 
   checkLogged = async (req, res, next) => {
     try {
-      const { _ACCESS_TOKEN, _REFRESH_TOKEN } = req.cookies;
-      if (_ACCESS_TOKEN && _REFRESH_TOKEN) {
-        const decode = await jwt.verify(_REFRESH_TOKEN, RefreshTokenSecretKey);
+      const { ACCESS_TOKEN, REFRESH_TOKEN } = req.cookies;
+      if (ACCESS_TOKEN && REFRESH_TOKEN) {
+        const decode = await jwt.verify(REFRESH_TOKEN, RefreshTokenSecretKey);
         if (decode.ipUser === req.connection.remoteAddress) {
           return res.json({
             message: "DA_DANG_NHAP",
