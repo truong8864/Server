@@ -37,8 +37,8 @@ module.exports.refreshToken = async (req, res, next) => {
       const { REFRESH_TOKEN } = req.cookies;
       const decoder = jwt.verify(REFRESH_TOKEN, RefreshTokenSecretKey);
       if (req.connection.remoteAddress === decoder.ipUser) {
+        console.log("DANG O DAY", decoder);
         const payload = req.decoder;
-
         const accessToken = jwt.sign(payload, AccessTokenSecretKey, {
           expiresIn: AccessTokenExpirationMinutes * 60 * 1000,
         });
