@@ -93,6 +93,8 @@ class AuthenticationController {
         const decoder = await jwt.verify(REFRESH_TOKEN, RefreshTokenSecretKey);
         if (decoder.ipUser === req.connection.remoteAddress) {
           return res.json({
+            decoder: decoder.ipUser,
+            IP: req.connection.remoteAddress,
             message: "DA_DANG_NHAP",
             data: { IsLogged: true },
           });
@@ -100,7 +102,7 @@ class AuthenticationController {
       }
       res.status(httpStatus.UNAUTHORIZED).json({
         message: "Token created by another user",
-        decoder,
+        decoder: decoder.ipUser,
         IP: req.connection.remoteAddress,
       });
     } catch (error) {
