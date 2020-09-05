@@ -1,6 +1,6 @@
 const express = require("express");
 
-const ClassAuthorizationController = require("./authorization.controller");
+const ClassAuthorizationController = require("./Authorization.controller");
 const AuthorizationController = new ClassAuthorizationController();
 
 const AuthorizationRoute = express.Router();
