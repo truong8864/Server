@@ -33,11 +33,11 @@ module.exports.refreshToken = async (req, res, next) => {
     const AccessTokenExpirationAt = new Date(
       req.decoder.iat * 1000 + req.decoder.exp - req.decoder.iat,
     );
+    console.log("DANG O DAY", req.decoder);
     if (AccessTokenExpirationAt < new Date(Date.now() + 1000 * 60 * 5)) {
       const { REFRESH_TOKEN } = req.cookies;
       const decoder = jwt.verify(REFRESH_TOKEN, RefreshTokenSecretKey);
       if (req.connection.remoteAddress === decoder.ipUser) {
-        console.log("DANG O DAY", decoder);
         const payload = req.decoder;
         const accessToken = jwt.sign(payload, AccessTokenSecretKey, {
           expiresIn: AccessTokenExpirationMinutes * 60 * 1000,
