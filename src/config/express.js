@@ -12,9 +12,9 @@ const { logs, FrontEndUrl } = require("./vars");
 
 const ErrorMiddleware = require("../api/v1/middlewares/Error.middleware");
 
-const AuthenticationMiddleware = require("../api/v1/middlewares/Authentication.middleware");
+const AuthenticationMiddleware = require("../api/v1/middlewares/authentication.middleware");
 
-const AuthorizationMiddleware = require("../api/v1/middlewares/Authorization.middleware");
+const AuthorizationMiddleware = require("../api/v1/middlewares/authorization.middleware");
 
 const AuthenticationRoute = require("../api/v1/Authentication/Authentication.route");
 
