@@ -6,7 +6,6 @@ const userOnlineSchema = new Schema(
     expireAt: { type: Date, default: null },
     LastActiveAt: { type: Date, default: Date.now() },
     username: { type: String, required: true, trim: true, minlength: 2 },
-    UserID: { type: String, required: true, trim: true },
     refreshToken: { type: String, required: true, trim: true },
   },
   { timestamps: true },

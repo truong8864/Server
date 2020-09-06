@@ -27,7 +27,6 @@ class AuthenticationController {
       const payload = {
         username: user.username,
         role: user.role,
-        UserID: req.cookies._ga,
       };
 
       const accessToken = jwt.sign(payload, AccessTokenSecretKey, {
@@ -38,12 +37,9 @@ class AuthenticationController {
         expiresIn: RefreshTokenExpirationMinutes * 60 * 1000,
       });
 
-      console.log("COOKIES : =>>", req.cookies);
-
       const newUserOnline = {
         expireAt: Date.now() + RefreshTokenExpirationMinutes * 60 * 1000,
         username: user.username,
-        UserID: req.cookies._ga,
         refreshToken: refreshToken,
       };
 
@@ -94,26 +90,19 @@ class AuthenticationController {
       const { ACCESS_TOKEN, REFRESH_TOKEN } = req.cookies;
       if (ACCESS_TOKEN && REFRESH_TOKEN) {
         const decoder = await jwt.verify(REFRESH_TOKEN, RefreshTokenSecretKey);
-        if (decoder.UserID === req.cookies._ga) {
+        if (decoder) {
           return res.json({
-            UserIdDecoder: decoder.UserID,
-            UserID: req.cookies._ga,
+            decoder,
             message: "DA_DANG_NHAP",
             data: { IsLogged: true },
           });
         }
-        return res.status(httpStatus.UNAUTHORIZED).json({
-          message: "Token created by another user",
-          UserIdDecoder: decoder.UserID,
-          UserID: req.cookies._ga,
-        });
       }
       res.status(httpStatus.UNAUTHORIZED).json({
         message: "CHUA_DANG_NHAP",
         data: { IsLogged: false },
       });
     } catch (error) {
-      console.log("ERRR CHECK LOGGED", error);
       res.status(httpStatus.UNAUTHORIZED).json({
         message: "CHUA_DANG_NHAP",
         data: { IsLogged: false },
