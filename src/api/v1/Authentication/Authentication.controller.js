@@ -27,7 +27,7 @@ class AuthenticationController {
       const payload = {
         username: user.username,
         role: user.role,
-        ipUser: req.connection.remoteAddress,
+        UserID: req.cookies._ga,
       };
 
       const accessToken = jwt.sign(payload, AccessTokenSecretKey, {
@@ -41,7 +41,7 @@ class AuthenticationController {
       const newUserOnline = {
         expireAt: Date.now() + RefreshTokenExpirationMinutes * 60 * 1000,
         username: user.username,
-        ipLogin: req.connection.remoteAddress,
+        UserID: req.cookies._ga,
         refreshToken: refreshToken,
       };
 
@@ -92,18 +92,18 @@ class AuthenticationController {
       const { ACCESS_TOKEN, REFRESH_TOKEN } = req.cookies;
       if (ACCESS_TOKEN && REFRESH_TOKEN) {
         const decoder = await jwt.verify(REFRESH_TOKEN, RefreshTokenSecretKey);
-        if (decoder.ipUser === req.connection.remoteAddress) {
+        if (decoder.UserID === req.cookies._ga) {
           return res.json({
-            decoder: decoder.ipUser,
-            IP: req.connection.remoteAddress,
+            UserIdDecoder: decoder.UserID,
+            UserID: req.cookies._ga,
             message: "DA_DANG_NHAP",
             data: { IsLogged: true },
           });
         }
         return res.status(httpStatus.UNAUTHORIZED).json({
           message: "Token created by another user",
-          decoder: decoder.ipUser,
-          IP: req.connection.remoteAddress,
+          UserIdDecoder: decoder.UserID,
+          UserID: req.cookies._ga,
         });
       }
       res.status(httpStatus.UNAUTHORIZED).json({

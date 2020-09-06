@@ -11,14 +11,14 @@ module.exports.verifyToken = async (req, res, next) => {
   try {
     const ACCESS_TOKEN = req.cookies.ACCESS_TOKEN;
     const decoder = await jwt.verify(ACCESS_TOKEN, AccessTokenSecretKey);
-    if (req.connection.remoteAddress === decoder.ipUser) {
+    if ((decoder.UserID = req.cookies._ga)) {
       req.decoder = decoder;
       return next();
     }
     res.status(httpStatus.UNAUTHORIZED).json({
       message: "Token created by another user",
-      decoder,
-      IP: req.connection.remoteAddress,
+      UserIdDecoder: decoder.UserID,
+      UserID: req.cookies._ga,
     });
   } catch (error) {
     console.log(error);
