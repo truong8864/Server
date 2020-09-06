@@ -13,18 +13,11 @@ PositionRoute.route("/")
   .patch()
   .delete();
 
-// PositionRoute.route("/:ID")
-//   .get(PositionController.getByID)
-//   .post()
-//   .put(PositionController.update)
-//   .patch()
-//   .delete(PositionController.delete);
-
-PositionRoute.route("/:Code")
-  .get(PositionController.getByCode)
+PositionRoute.route("/:ID")
+  .get(PositionController.getByID)
   .post()
-  .put(PositionController.updateByCode)
+  .put(PositionController.update)
   .patch()
-  .delete(PositionController.deleteByCode);
+  .delete(PositionController.delete);
 
 module.exports = PositionRoute;

@@ -3,8 +3,10 @@ const Schema = mongoose.Schema;
 
 const RoleSchema = new Schema(
   {
-    role: { type: String, required: true, unique: true },
-    allows: { type: Array, required: true },
+    role: { type: Schema.Types.String, required: true, unique: true },
+    allows: { type: Schema.Types.Array, required: true },
+    UserCreate: { type: Schema.Types.String },
+    UserUpdate: { type: Schema.Types.String },
   },
   { timestamps: true },
 );

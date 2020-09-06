@@ -20,6 +20,8 @@ class RoleController extends BaseController {
       res.json({
         method: "GET",
         path: req.originalUrl,
+        message: "GET BY ROLE",
+        status: "SUCCESS",
         data,
       });
     } catch (error) {
@@ -29,7 +31,7 @@ class RoleController extends BaseController {
 
   updateByRole = async (req, res, next) => {
     try {
-      const { role } = res.params;
+      const { role } = req.params;
       const data = req.body;
       const result = await this.Model.findOneAndUpdate({ role: role }, data, {
         new: true,
@@ -37,6 +39,8 @@ class RoleController extends BaseController {
       res.json({
         method: "PUT",
         path: req.originalUrl,
+        message: "UPDATE BY ROLE",
+        status: "SUCCESS",
         data: result,
       });
     } catch (error) {
@@ -46,11 +50,13 @@ class RoleController extends BaseController {
 
   deleteByRole = async (req, res, next) => {
     try {
-      const { role } = res.params;
+      const { role } = req.params;
       const result = await this.Model.findOneAndRemove({ role: role });
       res.json({
         method: "DELETE",
         path: req.originalUrl,
+        message: "DELETE BY ROLE",
+        status: "SUCCESS",
         data: result,
       });
     } catch (error) {

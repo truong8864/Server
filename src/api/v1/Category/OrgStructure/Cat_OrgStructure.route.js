@@ -13,18 +13,18 @@ OrgStructureRoute.route("/")
   .patch()
   .delete();
 
-// OrgStructureRoute.route("/:ID")
-//   .get(OrgStructureController.getByID)
-//   .post()
-//   .put(OrgStructureController.update)
-//   .patch()
-//   .delete(OrgStructureController.delete);
-
-OrgStructureRoute.route("/:Code")
-  .get(OrgStructureController.getByCode)
+OrgStructureRoute.route("/:ID")
+  .get(OrgStructureController.getByID)
   .post()
-  .put(OrgStructureController.updateByCode)
+  .put(OrgStructureController.update)
   .patch()
-  .delete(OrgStructureController.deleteByCode);
+  .delete(OrgStructureController.delete);
+
+// OrgStructureRoute.route("/:Code")
+//   .get(OrgStructureController.getByCode)
+//   .post()
+//   .put(OrgStructureController.updateByCode)
+//   .patch()
+//   .delete(OrgStructureController.deleteByCode);
 
 module.exports = OrgStructureRoute;

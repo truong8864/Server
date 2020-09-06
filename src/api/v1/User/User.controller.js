@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
 
+const bcrypt = require("bcrypt");
+const httpStatus = require("http-status");
+
 const { PasswordSecretKey } = require("../../../config/vars");
 
 const UserModel = require("./User.model");
@@ -18,7 +21,11 @@ class UserController extends BaseController {
   create = async (req, res, next) => {
     try {
       const { username, password } = req.body;
-      const hashedPassword = await bcrypt.hash(password, PasswordSecretKey);
+
+      const hashedPassword = await bcrypt.hash(
+        password,
+        parseInt(PasswordSecretKey),
+      );
       const userData = { username, password: hashedPassword };
       const user = await UserModel.create(userData);
       res
@@ -36,7 +43,7 @@ class UserController extends BaseController {
       if (data.password) {
         var hashedPassword = await bcrypt.hash(
           data.password,
-          PasswordSecretKey,
+          parseInt(PasswordSecretKey),
         );
       }
 
@@ -60,6 +67,8 @@ class UserController extends BaseController {
       res.json({
         method: "GET",
         path: req.originalUrl,
+        message: "GET BY USERNAME",
+        status: "SUCCESS",
         data,
       });
     } catch (error) {
@@ -69,7 +78,7 @@ class UserController extends BaseController {
 
   updateByUserName = async (req, res, next) => {
     try {
-      const { username } = res.params;
+      const { username } = req.params;
       const data = req.body;
       const result = await this.Model.findOneAndUpdate(
         { username: username },
@@ -81,6 +90,8 @@ class UserController extends BaseController {
       res.json({
         method: "PUT",
         path: req.originalUrl,
+        message: "UPDATE BY USERNAME",
+        status: "SUCCESS",
         data: result,
       });
     } catch (error) {
@@ -90,11 +101,13 @@ class UserController extends BaseController {
 
   deleteByUserName = async (req, res, next) => {
     try {
-      const { username } = res.params;
+      const { username } = req.params;
       const result = await this.Model.findOneAndRemove({ username: username });
       res.json({
         method: "DELETE",
         path: req.originalUrl,
+        message: "DELETE BY USERNAME",
+        status: "SUCCESS",
         data: result,
       });
     } catch (error) {

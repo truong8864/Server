@@ -12,6 +12,7 @@ const { logs, FrontEndUrl } = require("./vars");
 
 const ErrorMiddleware = require("../api/v1/middlewares/Error.middleware");
 
+///////////////////////////////////////////TRUONG
 const AuthenticationMiddleware = require("../api/v1/middlewares/Authentication.middleware");
 
 const AuthorizationMiddleware = require("../api/v1/middlewares/Authorization.middleware");
@@ -21,8 +22,16 @@ const AuthenticationRoute = require("../api/v1/Authentication/Authentication.rou
 const AuthorizationRoute = require("../api/v1/Authorization/Authorization.route");
 
 const RoutesV1 = require("../api/v1/routes");
+/////////////////////////////////////////////
 
-const Parse = require("../api/v1/middlewares/Paser.middleware");
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const apiRouteV1 = require("../../api/v1/routes");
+const { verifyToken } = require("../../api/v1/controllers/verifyToken");
+const loginRouter = require("../../api/v1/routes/Login.router");
+const RouterUser = require("../../api/v1/routes/RouterUser");
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
  * Express instance
@@ -57,16 +66,44 @@ const corsOptionCredentials = {
 
 app.use(cors(corsOptionCredentials));
 
-// enable authentication
-// app.use(passport.initialize());
-// passport.use("jwt", strategies.jwt);
-
 // // mount api v1 routes
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+app.use("/api/v1/user", loginRouter);
+app.use("/api/v1/user", verifyToken, RouterUser);
+app.use(
+  "/api/v1",
+  AuthenticationMiddleware.verifyToken,
+  AuthenticationMiddleware.refreshToken,
+  apiRouteV1,
+);
+
+// Vào trong apiRouterV1 sửa nếu bị lỗi phần export
+// const pdf = require("html-pdf");
+// const pdfTemplate = require("../../api/v1/ExportFile/documents/Contract");
+
+// app.get("/api/v1/fetch-pdf", (req, res) => {
+//   res.sendFile(`${__dirname}/result.pdf`);
+// });
+// app.post("/api/v1/create-pdf", (req, res) => {
+//   pdf.create(pdfTemplate(req.body), {}).toFile("result.pdf", (err) => {
+//     if (err) {
+//       res.send(Promise.reject());
+//     }
+//     res.send(Promise.resolve());
+//   });
+// });
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//******************************************************************************************************
+/**
+ *  ROUTE TRUONG
+ */
 app.use("/authentication", AuthenticationRoute);
 app.use("/authorization", AuthorizationRoute);
-
-app.use(Parse.parseURL);
 app.use(
   "/hrm/api/v1",
   AuthenticationMiddleware.verifyToken,
@@ -77,6 +114,8 @@ app.use(
   // ]),
   RoutesV1,
 );
+//******************************************************************************************************
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // if error is not an instanceOf APIError, convert it.
 app.use(ErrorMiddleware.converter);
