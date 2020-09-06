@@ -107,7 +107,11 @@ class AuthenticationController {
         IP: req.connection.remoteAddress,
       });
     } catch (error) {
-      res.json({ error, message: "CHUA_DANG_NHAP", data: { IsLogged: false } });
+      res.json({
+        error: error,
+        message: "CHUA_DANG_NHAP",
+        data: { IsLogged: false },
+      });
     }
   };
 }
