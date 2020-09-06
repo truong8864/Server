@@ -61,6 +61,7 @@ class AuthenticationController {
       });
       return res.json({
         message: "LOGIN_THANH_CONG",
+        Expire: RefreshTokenExpirationMinutes,
         data: {
           username,
           refreshToken,
@@ -106,7 +107,7 @@ class AuthenticationController {
         IP: req.connection.remoteAddress,
       });
     } catch (error) {
-      res.json({ message: "CHUA_DANG_NHAP", data: { IsLogged: false } });
+      res.json({ error, message: "CHUA_DANG_NHAP", data: { IsLogged: false } });
     }
   };
 }
