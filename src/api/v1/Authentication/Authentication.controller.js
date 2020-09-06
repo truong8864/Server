@@ -100,16 +100,19 @@ class AuthenticationController {
             data: { IsLogged: true },
           });
         }
+        return res.status(httpStatus.UNAUTHORIZED).json({
+          message: "Token created by another user",
+          decoder: decoder.ipUser,
+          IP: req.connection.remoteAddress,
+        });
       }
       res.status(httpStatus.UNAUTHORIZED).json({
-        message: "Token created by another user",
-        decoder: decoder.ipUser,
-        IP: req.connection.remoteAddress,
+        message: "CHUA_DANG_NHAP",
+        data: { IsLogged: false },
       });
     } catch (error) {
       console.log("ERRR CHECK LOGGED", error);
-      res.json({
-        error: error,
+      res.status(httpStatus.UNAUTHORIZED).json({
         message: "CHUA_DANG_NHAP",
         data: { IsLogged: false },
       });
