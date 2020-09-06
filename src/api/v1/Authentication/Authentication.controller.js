@@ -38,6 +38,8 @@ class AuthenticationController {
         expiresIn: RefreshTokenExpirationMinutes * 60 * 1000,
       });
 
+      console.log("COOKIES : =>>", req.cookies);
+
       const newUserOnline = {
         expireAt: Date.now() + RefreshTokenExpirationMinutes * 60 * 1000,
         username: user.username,
