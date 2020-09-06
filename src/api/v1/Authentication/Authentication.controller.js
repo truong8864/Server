@@ -107,6 +107,7 @@ class AuthenticationController {
         IP: req.connection.remoteAddress,
       });
     } catch (error) {
+      console.log("ERRR CHECK LOGGED", error);
       res.json({
         error: error,
         message: "CHUA_DANG_NHAP",
