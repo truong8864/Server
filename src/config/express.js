@@ -60,7 +60,7 @@ app.use(helmet());
 // enable CORS - Cross Origin Resource Sharing
 
 const corsOptionCredentials = {
-  origin: FrontEndUrl,
+  origin: "https://hrmanager-ppj.herokuapp.com", ///FrontEndUrl,
   credentials: true,
 };
 
