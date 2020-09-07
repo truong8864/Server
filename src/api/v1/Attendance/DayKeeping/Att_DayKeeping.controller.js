@@ -162,48 +162,45 @@ class Att_TimeKeepingDayController extends BaseController {
       next(error);
     }
   };
-
   calculate = async (req, res, next) => {
-    calculate = async (req, res, next) => {
-      try {
-        /**
-         * TINH NGAY CONG
-         */
+    try {
+      /**
+       * TINH NGAY CONG
+       */
 
-        const { filters = {} } = qs.parse(req.query, {
-          allowDots: true,
-        });
+      const { filters = {} } = qs.parse(req.query, {
+        allowDots: true,
+      });
 
-        const DateKeeping = filters.DateKeeping;
-        if (DateKeeping) {
-          if (DateKeeping.$gte) {
-            filters.DateKeeping.$gte = new Date(DateKeeping.$gte);
-          }
-          if (DateKeeping.$lte) {
-            filters.DateKeeping.$lte = new Date(DateKeeping.$lte);
-          }
+      const DateKeeping = filters.DateKeeping;
+      if (DateKeeping) {
+        if (DateKeeping.$gte) {
+          filters.DateKeeping.$gte = new Date(DateKeeping.$gte);
         }
-
-        const result = await this.Model.updateMany(
-          { ...filters, Status: "CHUA_TINH_CONG" },
-          [
-            {
-              $set: {
-                Status: "DA_TINH_CONG",
-                Total: { $subtract: ["$TimeOut", "$TimeIn"] },
-              },
-            },
-          ],
-        );
-        res.json({
-          method: "GET",
-          path: req.originalUrl,
-          message: "TINH_CONG",
-        });
-      } catch (error) {
-        next(error);
+        if (DateKeeping.$lte) {
+          filters.DateKeeping.$lte = new Date(DateKeeping.$lte);
+        }
       }
-    };
+
+      const result = await this.Model.updateMany(
+        { ...filters, Status: "CHUA_TINH_CONG" },
+        [
+          {
+            $set: {
+              Status: "DA_TINH_CONG",
+              Total: { $subtract: ["$TimeOut", "$TimeIn"] },
+            },
+          },
+        ],
+      );
+      res.json({
+        method: "GET",
+        path: req.originalUrl,
+        message: "TINH_CONG",
+      });
+    } catch (error) {
+      next(error);
+    }
   };
 
   synthesis = async (req, res, next) => {
