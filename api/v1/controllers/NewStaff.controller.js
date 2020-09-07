@@ -103,8 +103,8 @@ class NewStaffController extends BaseController {
   CreatByFilesCSV = async (req, res) => {
     try {
       const data = req.body;
-      for (i = 0; i < data.length; i++) {
-        newStaffModel.create(data[i]);
+      for (let i = 0; i < data.length; i++) {
+        await newStaffModel.create(data[i]);
       }
       const result = await newStaffModel.find();
       return res.status(200).json(result);

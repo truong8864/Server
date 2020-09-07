@@ -17,6 +17,19 @@ class Att_TimeKeepingDayController extends BaseController {
     }
     super(Att_TimeKeepingDayModel);
   }
+
+  upload = async (req, res, next) => {
+    try {
+      const data = req.body;
+      //Att_TimeKeepingDayModel.insertMany(data)
+      const result = await this.Model.insertMany(data);
+      console.log(data);
+      res.json(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   get = async (req, res, next) => {
     try {
       const {
@@ -151,26 +164,46 @@ class Att_TimeKeepingDayController extends BaseController {
   };
 
   calculate = async (req, res, next) => {
-    try {
-      /**
-       * TINH NGAY CONG
-       */
-      const result = await this.Model.updateMany({ Status: "CHUA_TINH_CONG" }, [
-        {
-          $set: {
-            Status: "DA_TINH_CONG",
-            Total: { $subtract: ["$TimeOut", "$TimeIn"] },
-          },
-        },
-      ]);
-      res.json({
-        method: "GET",
-        path: req.originalUrl,
-        message: "TINH_CONG",
-      });
-    } catch (error) {
-      next(error);
-    }
+    calculate = async (req, res, next) => {
+      try {
+        /**
+         * TINH NGAY CONG
+         */
+
+        const { filters = {} } = qs.parse(req.query, {
+          allowDots: true,
+        });
+
+        const DateKeeping = filters.DateKeeping;
+        if (DateKeeping) {
+          if (DateKeeping.$gte) {
+            filters.DateKeeping.$gte = new Date(DateKeeping.$gte);
+          }
+          if (DateKeeping.$lte) {
+            filters.DateKeeping.$lte = new Date(DateKeeping.$lte);
+          }
+        }
+
+        const result = await this.Model.updateMany(
+          { ...filters, Status: "CHUA_TINH_CONG" },
+          [
+            {
+              $set: {
+                Status: "DA_TINH_CONG",
+                Total: { $subtract: ["$TimeOut", "$TimeIn"] },
+              },
+            },
+          ],
+        );
+        res.json({
+          method: "GET",
+          path: req.originalUrl,
+          message: "TINH_CONG",
+        });
+      } catch (error) {
+        next(error);
+      }
+    };
   };
 
   synthesis = async (req, res, next) => {
