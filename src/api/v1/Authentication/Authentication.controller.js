@@ -77,8 +77,16 @@ class AuthenticationController {
       await UserOnlineModel.findOneAndDelete({
         refreshToken: REFRESH_TOKEN,
       });
-      res.clearCookie("REFRESH_TOKEN");
-      res.clearCookie("ACCESS_TOKEN");
+      res.clearCookie("REFRESH_TOKEN", {
+        httpOnly: true,
+        sameSite: "None",
+        secure: true,
+      });
+      res.clearCookie("ACCESS_TOKEN", {
+        httpOnly: true,
+        sameSite: "None",
+        secure: true,
+      });
       res.json({ message: "LOGOUT FINISH" });
     } catch (error) {
       next(error);
