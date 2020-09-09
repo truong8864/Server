@@ -22,20 +22,16 @@ class UserController extends BaseController {
     try {
       const { username, password } = req.body;
 
-      console.log("START");
-
       const hashedPassword = await bcrypt.hash(
         password,
         parseInt(PasswordSecretKey),
       );
-      console.log("END");
       const userData = { username, password: hashedPassword };
       const user = await UserModel.create(userData);
       res
         .status(httpStatus.CREATED)
         .json({ message: "CREATE USER", data: user });
     } catch (error) {
-      console.log("ERR");
       next(error);
     }
   };
