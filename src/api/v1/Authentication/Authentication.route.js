@@ -13,4 +13,6 @@ AuthenticationRoute.route("/check-logged").get(
   AuthenticationController.checkLogged,
 );
 
+AuthenticationRoute.route("/role").get(AuthenticationController.getRole);
+
 module.exports = AuthenticationRoute;

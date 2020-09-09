@@ -109,6 +109,17 @@ class AuthenticationController {
       });
     }
   };
+
+  getRole = async (req, res, next) => {
+    try {
+      res.status(httpStatus.OK).json({
+        message: "ROLE",
+        role: req.decoder.role,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 module.exports = AuthenticationController;
