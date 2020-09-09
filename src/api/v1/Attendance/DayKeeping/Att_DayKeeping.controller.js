@@ -27,6 +27,7 @@ class Att_TimeKeepingDayController extends BaseController {
       res.json(result);
     } catch (error) {
       console.log(error);
+      next(error);
     }
   };
 

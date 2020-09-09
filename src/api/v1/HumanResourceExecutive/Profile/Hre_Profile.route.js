@@ -13,18 +13,18 @@ ProfileRoute.route("/")
   .patch()
   .delete();
 
-ProfileRoute.route("/:ID")
-  .get(ProfileController.getByID)
-  .post()
-  .put(ProfileController.update)
-  .patch()
-  .delete(ProfileController.delete);
-
-// ProfileRoute.route("/:CodeEmp")
-//   .get(ProfileController.getByCodeEmp)
+// ProfileRoute.route("/:ID")
+//   .get(ProfileController.getByID)
 //   .post()
-//   .put(ProfileController.updateByCodeEmp)
+//   .put(ProfileController.update)
 //   .patch()
-//   .delete(ProfileController.deleteByCodeEmp);
+//   .delete(ProfileController.delete);
+
+ProfileRoute.route("/:CodeEmp")
+  .get(ProfileController.getByCodeEmp)
+  .post()
+  .put(ProfileController.updateByCodeEmp)
+  .patch()
+  .delete(ProfileController.deleteByCodeEmp);
 
 module.exports = ProfileRoute;
