@@ -160,9 +160,9 @@ class NewStaffController extends BaseController {
     try {
       //const { ID } = req.params;
       const NewListProfile = await newStaffModel.find({});
-      NewListProfile.forEach((item, index) => {
-        const { _id,...NewProfile }= { ...item, ID: uuidv4() };
-        await Hre_ProfileModel.create(NewProfile)
+      NewListProfile.forEach(async (item, index) => {
+        const { _id, ...NewProfile } = { ...item, ID: uuidv4() };
+        await Hre_ProfileModel.create(NewProfile);
       });
       const result = await newStaffModel.remove({});
       return res.status(200).json(result);
