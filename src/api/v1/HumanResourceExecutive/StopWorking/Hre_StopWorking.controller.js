@@ -4,6 +4,7 @@ const httpStatus = require("http-status");
 
 const Hre_StopWorkingModel = require("./Hre_StopWorking.model");
 const BaseController = require("../../utils/BaseController");
+const Hre_ProfileModel = require("../../../../../api/v1/models/Hre_Profile.model");
 
 class Hre_StopWorkingController extends BaseController {
   constructor(Model = {}) {
@@ -13,6 +14,32 @@ class Hre_StopWorkingController extends BaseController {
     }
     super(Hre_StopWorkingModel);
   }
+
+  update = async (req, res, next) => {
+    try {
+      const { ID } = req.params;
+      const data = req.body;
+
+      const result = await this.Model.findByIdAndUpdate(ID, data, {
+        new: true,
+      });
+      if (data.Status === "E_APPROVED") {
+        await Hre_ProfileModel.updateOne(
+          { ID: result.ProfileID },
+          { StatusSyn: "E_STOP" },
+        );
+      }
+
+      res.json({
+        method: "PUT",
+        path: req.originalUrl,
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
   get = async (req, res, next) => {
     try {
       const {
