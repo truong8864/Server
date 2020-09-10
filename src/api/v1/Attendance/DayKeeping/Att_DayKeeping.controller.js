@@ -20,7 +20,7 @@ class Att_TimeKeepingDayController extends BaseController {
 
   upload = async (req, res, next) => {
     try {
-      const { data } = req.body;
+      const data = req.body;
       console.log("DATA UPLOAD", data);
       //await Att_TimeKeepingDayModel.insertMany(data);
       //const result = await this.Model.insertMany(data);
