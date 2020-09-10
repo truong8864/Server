@@ -34,9 +34,10 @@ class Att_TimeKeepingGroupController extends BaseController {
       const perPage = parseInt(req.query.limit || 25);
 
       if (filters.KiCong) {
-        filters.KiCong = `${("0" + (filters.KiCong.getMonth() + 1)).slice(
-          -2,
-        )}/${filters.KiCong.getFullYear()}`;
+        filters.KiCong = `${(
+          "0" +
+          (new Date(filters.KiCong).getMonth() + 1)
+        ).slice(-2)}/${new Date(filters.KiCong).getFullYear()}`;
       }
       if (isAll) {
         const data = await this.Model.aggregate([
