@@ -33,6 +33,11 @@ class Att_TimeKeepingGroupController extends BaseController {
       const page = parseInt(req.query.page || 1);
       const perPage = parseInt(req.query.limit || 25);
 
+      if (filters.KiCong) {
+        filters.KiCong = `${("0" + (filters.KiCong.getMonth() + 1)).slice(
+          -2,
+        )}/${filters.KiCong.getFullYear()}`;
+      }
       if (isAll) {
         const data = await this.Model.aggregate([
           {
@@ -45,7 +50,9 @@ class Att_TimeKeepingGroupController extends BaseController {
           },
           {
             $addFields: {
-              OrgStructureID: { $arrayElemAt: ["$Profile.OrgStructureID", 0] },
+              OrgStructureID: {
+                $arrayElemAt: ["$Profile.OrgStructureID", 0],
+              },
             },
           },
           {
