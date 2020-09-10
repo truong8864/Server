@@ -24,6 +24,13 @@ class Att_SalaryController extends BaseController {
         allowDots: true,
       });
 
+      if (filters.KiCong) {
+        filters.KiCong = `${(
+          "0" +
+          (new Date(filters.KiCong).getMonth() + 1)
+        ).slice(-2)}/${new Date(filters.KiCong).getFullYear()}`;
+      }
+
       const isAll = parseInt(req.query.all || 0, { allowDots: true });
 
       const page = parseInt(req.query.page || 1);
