@@ -15,8 +15,8 @@ const UserModel = require("../User/User.model");
 class AuthenticationController {
   login = async (req, res, next) => {
     try {
+      console.log("ON LOGIN ON LOGIN");
       const { username, password } = req.body;
-
       const user = await UserModel.findOne({ username });
       if (!user) return res.json({ message: "USE_NOT_FOUND" });
 
