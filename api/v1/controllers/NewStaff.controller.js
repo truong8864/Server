@@ -1,12 +1,14 @@
 const qs = require("qs");
 const httpStatus = require("http-status");
 const mongoose = require("mongoose");
+const { v4: uuidv4 } = require("uuid");
 
 const newStaffModel = require("../models/NewStaff.model");
 const Hre_StopWorkingModel = require("../../../src/api/v1/HumanResourceExecutive/StopWorking/Hre_StopWorking.model");
 const Hre_ProfilesModel = require("../models/Hre_Profile.model");
 
 const BaseController = require("../../../src/api/v1/utils/BaseController");
+const Hre_ProfileModel = require("../models/Hre_Profile.model");
 
 class NewStaffController extends BaseController {
   constructor(Model = {}) {
@@ -157,6 +159,11 @@ class NewStaffController extends BaseController {
   deleteAll = async (req, res) => {
     try {
       //const { ID } = req.params;
+      const NewListProfile = await newStaffModel.find({});
+      NewListProfile.forEach((item, index) => {
+        const { _id,...NewProfile }= { ...item, ID: uuidv4() };
+        await Hre_ProfileModel.create(NewProfile)
+      });
       const result = await newStaffModel.remove({});
       return res.status(200).json(result);
     } catch (err) {
